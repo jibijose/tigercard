@@ -1,0 +1,28 @@
+<configuration>
+    <contextName>WebContext</contextName>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${logging.appender.console.level:-DEBUG}</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5p | [%thread] [%X{APPNAME}] %logger{5}:%L - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.sahaj.jibi" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <appender name="STDOUT" class="ch.qos.logback.classic.AsyncAppender" >
+        <appender-ref ref="CONSOLE" />
+        <queueSize>10000</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+
+    <root>
+        <level value="${logger.root.level:-WARN}"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
